@@ -1,0 +1,3 @@
+Plugin utilizzati:
+
+cordova plugin add cordova-clipboard

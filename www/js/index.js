@@ -26,15 +26,60 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 }
 
+function badWord(parola) {
+    if (parola === "merda")
+        return true;
+}
+
 function analizzaTesto(testo) {
-    let umore = "img/felice.png";
-    let parere = "Non ho rilevato toni negativi nel testo, tuttavia qualcosa potrebbe sfuggirmi... pensaci bene e conta fino a 10 prima di inviare!";
+    let parole = testo.toLowerCase().split(/[\s.!?:;,]+/);
     let score = 0; // 0 OK, 1 dubbio, 2 da bloccare
-    return { umore: umore, parere: parere, score: score };
+    for (let i = 0; i < parole.length; ++i) {
+        if (badWord(parole[i])) {
+            ++score;
+        }
+    }
+    let umore = "";
+    let parere = "";
+    let suono = "";
+    if (score === 0) {
+        umore = "img/felice.png";
+        parere = "Non ho rilevato toni negativi nel testo, tuttavia qualcosa potrebbe sfuggirmi... pensaci bene e conta fino a 10 prima di inviarlo!";
+        suono = "snd/positive.mp3";
+    } else {
+        umore = "img/triste.png";
+        parere = "Il testo potrebbe contenere parole che sarebbe meglio evitare. Conta fino a 10 e rifletti attentamente prima di inviarlo...";
+        suono = "snd/negative.mp3";
+    }
+    return { umore: umore, parere: parere, score: score, suono: suono };
+}
+
+function initPageTutorial() {
+    let navigator = document.querySelector('#myNavigator');
+    let count = 1;
+    let buttonTutor = document.getElementById("button-tutor");
+    let imgTutor = document.getElementById("img-tutor");
+    let textTutor = document.getElementById("text-tutor");
+    function next() {
+        ++count;
+        if (count === 2) {
+            textTutor.innerHTML = "2) Leggi il feedback e conta fino a 10 prima di inviare";
+            imgTutor.src = "img/screen02.png";
+        } else if (count === 3) {
+            textTutor.innerHTML = "3) Premi il bottone per copiare il testo da inviare";
+            imgTutor.src = "img/screen03.png";
+        } else if (count === 4) {
+            textTutor.innerHTML = "4) Apri la tua app preferita (WhatsApp, Telegram...) ed invia il messaggio";
+            imgTutor.src = "img/screen04.png";
+        } else {
+            myNavigator.pushPage('pageInput.html', { animation: 'fade' });
+        }
+    }
+    buttonTutor.onclick = next;
+    imgTutor.onclick = next;
 }
 
 function initPageAbout() {
-    console.log("INIT PAGE ABOUT");
     let navigator = document.querySelector('#myNavigator');
     let buttonAboutOk = document.getElementById("button-about-ok");
     buttonAboutOk.onclick = function () {
@@ -82,6 +127,7 @@ function initPageFeedback() {
         countdown.style.display = "block";
         umore.src = analisi.umore;
         parere.innerHTML = analisi.parere;
+        new Media(analisi.suono).play();
         let score = analisi.score;
         bottoneCopia.onclick = function () {
             cordova.plugins.clipboard.copy(testo);
@@ -99,17 +145,18 @@ function initPageFeedback() {
         }
         loader.style.display = "none";
         feedback.style.display = "block";
-        let conta = 1;
+        countdown.innerHTML = "1";
+        let conta = 2;
         let interval = setInterval(function () {
             if (conta <= 10) {
                 countdown.innerHTML = conta;
                 conta = conta + 1;
             } else {
-                bottoneCopia.style.display = "inline";
-                bottoneIndietro.style.display = "inline";
+                bottoneCopia.style.display = "block";
+                bottoneIndietro.style.display = "block";
                 countdown.style.display = "none";
             }
-        }, 100);
+        }, 1000);
     }, 2000);
 }
 
@@ -117,8 +164,10 @@ document.addEventListener('show', function (event) {
     let page = event.target;
     if (page.id === "pageSplash") {
         setTimeout(function () {
-            myNavigator.pushPage('pageInput.html', { animation: 'fade' });
+            myNavigator.pushPage('pageTutorial.html', { animation: 'fade' });
         }, 2500);
+    } else if (page.id === 'pageTutorial') {
+        initPageTutorial();
     } else if (page.id === 'pageInput') {
         initPageInput();
     } else if (page.id === 'pageFeedback') {

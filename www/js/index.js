@@ -51,7 +51,7 @@ function analizzaTesto(testo) {
         parere = "Il testo potrebbe contenere parole che sarebbe meglio evitare. Conta fino a 10 e rifletti attentamente prima di inviarlo...";
         suono = "snd/negative.mp3";
     }
-    return { umore: umore, parere: parere, score: score, suono: suono };
+    return { umore: umore, parere: parere, suono: suono };
 }
 
 function initPageTutorial() {
@@ -127,8 +127,7 @@ function initPageFeedback() {
         countdown.style.display = "block";
         umore.src = analisi.umore;
         parere.innerHTML = analisi.parere;
-        new Media(analisi.suono).play();
-        let score = analisi.score;
+        new Media(analisi.suono).play({ numberOfLoops: 1 });
         bottoneCopia.onclick = function () {
             cordova.plugins.clipboard.copy(testo);
             toast.style.display = "block";

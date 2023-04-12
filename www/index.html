@@ -55,7 +55,7 @@
             background-size: contain;
         }
 
-        #dacontrollare {
+        #dacontrollare, #dacontrollare2 {
             width: 100%;
             font-size: 200%;
             margin-bottom: 1em;
@@ -105,20 +105,21 @@
             <ons-toolbar>
                 <div class="center">Count to 10 - Tutorial</div>
             </ons-toolbar>
-            <img id="img-tutor" src="img/screen01.png">
-            <p id="text-tutor">1) Scrivi la frase da controllare</p>
+            <img id="img-tutor" src="img/arrabiata.png" style="height: 30%">
+            <p id="text-tutor">Quante volte ti è capitato di aver inviato impulsivamente un messaggio di cui poi ti sei pentit*?<br><br>Count to 10 ti aiuta ad evitare questi incidenti: prima di inviare un messaggio di cui potresti pentirti controllalo con questa app.<br><br>I suoi suggerimenti non sono infallibili ma Count to 10 è in grado di rilevare un buon numero di parole da evitare.</p>
             <ons-button id="button-tutor">Avanti</ons-button>
         </ons-page>
     </template>
 
     <template id="pageAbout.html">
         <ons-page id="pageAbout">
-            <div style="text-align: center">
-                <img src="img/scherzo.png" style="height: 200px">
-                <img src="img/cc.png" style="height: 200px">
-                <h1>Count to 10</h1>
+            <div style="text-align: center; margin-top: 5em">
+                <img src="img/scherzo.png" style="height: 150px">
+                <img src="img/cc.png" style="height: 150px">
+                <h1 style="margin-top: 2em">Count to 10</h1>
+                <p><strong>Controlla i tuoi messaggi prima di inviarli</strong></p>
                 <p>Copyright 2023 I.I.S. "Casagrande-Cesi", Terni</p>
-                <ons-button id="button-about-ok" modifier="large cta">OK</ons-button>
+                <ons-button id="button-about-ok" modifier="large cta" style="margin-top: 2em">OK</ons-button>
             </div>
         </ons-page>
     </template>
@@ -156,6 +157,8 @@
                 <img id="umore" src="#" class="illustrazione">
                 <p id="parere"></p>
                 <p id="countdown"></p>
+                <textarea id="dacontrollare2" class="textarea" rows="3"
+                    placeholder="Pusillanime, gagliffo e marrano!" readonly></textarea>
                 <ons-button id="button-copia" modifier="large" style="margin-bottom: 1em">Copia negli appunti</ons-button>
                 <ons-button id="button-indietro" modifier="large">Controlla un altro messaggio</ons-button>
             </div>
@@ -164,6 +167,7 @@
             </div>
         </ons-page>
     </template>
+    <script src="js/parole.js"></script>
     <script src="js/index.js"></script>
 </body>
 

@@ -1,0 +1,1 @@
+copy parole.txt "D:\Nextcloud\rnd\Casagrande-Cesi\2022-23\Concorsi\Virtual is real\"

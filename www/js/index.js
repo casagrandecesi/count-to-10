@@ -26,14 +26,20 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 }
 
+function encrypt(parola) {
+    let res = "";
+    for (let i = 0; i < parola.length; ++i)
+        res += String.fromCharCode(parola.charCodeAt(i) + 3);
+    return res;
+}
+
 function badWord(parola) {
-    if (parola === "merda")
-        return true;
+    return PAROLE.indexOf(encrypt(parola)) !== -1;
 }
 
 function analizzaTesto(testo) {
     let parole = testo.toLowerCase().split(/[\s.!?:;,]+/);
-    let score = 0; // 0 OK, 1 dubbio, 2 da bloccare
+    let score = 0; // 0 OK, > 0 da segnalare
     for (let i = 0; i < parole.length; ++i) {
         if (badWord(parole[i])) {
             ++score;
@@ -55,14 +61,17 @@ function analizzaTesto(testo) {
 }
 
 function initPageTutorial() {
-    let navigator = document.querySelector('#myNavigator');
-    let count = 1;
+    let count = 0;
     let buttonTutor = document.getElementById("button-tutor");
     let imgTutor = document.getElementById("img-tutor");
     let textTutor = document.getElementById("text-tutor");
     function next() {
         ++count;
-        if (count === 2) {
+        if (count === 1) {
+            textTutor.innerHTML = "1) Scrivi la frase da controllare";
+            imgTutor.src = "img/screen01.png";
+            imgTutor.style.height = "80%";
+        } else if (count === 2) {
             textTutor.innerHTML = "2) Leggi il feedback e conta fino a 10 prima di inviare";
             imgTutor.src = "img/screen02.png";
         } else if (count === 3) {
@@ -72,6 +81,7 @@ function initPageTutorial() {
             textTutor.innerHTML = "4) Apri la tua app preferita (WhatsApp, Telegram...) ed invia il messaggio";
             imgTutor.src = "img/screen04.png";
         } else {
+            window.localStorage.setItem("count-to-10-tutorial", "fatto");
             myNavigator.pushPage('pageInput.html', { animation: 'fade' });
         }
     }
@@ -121,9 +131,12 @@ function initPageFeedback() {
         let countdown = document.getElementById("countdown");
         let bottoneCopia = document.getElementById("button-copia");
         let bottoneIndietro = document.getElementById("button-indietro");
+        let dacontrollare2 = document.getElementById("dacontrollare2");
         let navigator = document.querySelector('#myNavigator');
         bottoneCopia.style.display = "none";
         bottoneIndietro.style.display = "none";
+        dacontrollare2.style.display = "none";
+        dacontrollare2.value = testo;
         countdown.style.display = "block";
         umore.src = analisi.umore;
         parere.innerHTML = analisi.parere;
@@ -153,6 +166,7 @@ function initPageFeedback() {
             } else {
                 bottoneCopia.style.display = "block";
                 bottoneIndietro.style.display = "block";
+                dacontrollare2.style.display = "block";
                 countdown.style.display = "none";
             }
         }, 1000);
@@ -163,7 +177,11 @@ document.addEventListener('show', function (event) {
     let page = event.target;
     if (page.id === "pageSplash") {
         setTimeout(function () {
-            myNavigator.pushPage('pageTutorial.html', { animation: 'fade' });
+            if (window.localStorage.getItem("count-to-10-tutorial") === "fatto") {
+                myNavigator.pushPage('pageInput.html', { animation: 'fade' });
+            } else {
+                myNavigator.pushPage('pageTutorial.html', { animation: 'fade' });
+            }
         }, 2500);
     } else if (page.id === 'pageTutorial') {
         initPageTutorial();

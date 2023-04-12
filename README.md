@@ -17,7 +17,7 @@
 
 ## Introduzione
 
-Count to 10 è un app per promuovere l'autocontrollo quando si usano media digitali. È risaputo infatti che quando usiamo chat o social di qualunque genere i nostri freni inibitori funzionano decisamente peggio rispetto alla comunicazione di persona. Count to 10 è un valido aiuto per frenare i nostri bollenti spiriti prima di inviare un messaggio potenzialmente controverso.
+Count to 10 è un'app per promuovere l'autocontrollo quando si usano media digitali. È risaputo infatti che quando usiamo chat o social di qualunque genere i nostri freni inibitori funzionano decisamente peggio rispetto alla comunicazione di persona. Count to 10 è un valido aiuto per frenare i nostri bollenti spiriti prima di inviare un messaggio potenzialmente controverso.
 
 L'app è stata sviluppata dalle classi I A e III B (A.S. 2022/23) dell'I.I.S. "Casagrande-Cesi" di Terni nell'ambito del concorso "Virtual Is Real" indetto da AICA e USR Umbria nel 2023.
 

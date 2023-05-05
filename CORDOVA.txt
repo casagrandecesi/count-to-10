@@ -2,3 +2,4 @@ Plugin utilizzati:
 
 cordova plugin add cordova-clipboard
 cordova plugin add cordova-plugin-media
+cordova plugin add cordova-plugin-device

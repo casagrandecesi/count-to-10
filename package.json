@@ -17,6 +17,7 @@
     "cordova-browser": "^6.0.0",
     "cordova-clipboard": "^1.3.0",
     "cordova-ios": "^6.3.0",
+    "cordova-plugin-device": "^2.1.0",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-media": "^6.1.0"
   },
@@ -30,7 +31,8 @@
       "cordova-clipboard": {},
       "cordova-plugin-media": {
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
-      }
+      },
+      "cordova-plugin-device": {}
     }
   },
   "dependencies": {

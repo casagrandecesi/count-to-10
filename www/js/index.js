@@ -65,21 +65,22 @@ function initPageTutorial() {
     let buttonTutor = document.getElementById("button-tutor");
     let imgTutor = document.getElementById("img-tutor");
     let textTutor = document.getElementById("text-tutor");
+    let plat = device.platform === "Android" ? "and" : "ios";
     function next() {
         ++count;
         if (count === 1) {
             textTutor.innerHTML = "1) Scrivi la frase da controllare";
-            imgTutor.src = "img/screen01.png";
+            imgTutor.src = "img/screen01-" + plat + ".png";
             imgTutor.style.height = "80%";
         } else if (count === 2) {
             textTutor.innerHTML = "2) Leggi il feedback e conta fino a 10 prima di inviare";
-            imgTutor.src = "img/screen02.png";
+            imgTutor.src = "img/screen02-" + plat + ".png";
         } else if (count === 3) {
             textTutor.innerHTML = "3) Premi il bottone per copiare il testo da inviare";
-            imgTutor.src = "img/screen03.png";
+            imgTutor.src = "img/screen03-" + plat + ".png";
         } else if (count === 4) {
             textTutor.innerHTML = "4) Apri la tua app preferita (WhatsApp, Telegram...) ed invia il messaggio";
-            imgTutor.src = "img/screen04.png";
+            imgTutor.src = "img/screen04-" + plat + ".png";
         } else {
             window.localStorage.setItem("count-to-10-tutorial", "fatto");
             myNavigator.pushPage('pageInput.html', { animation: 'fade' });
